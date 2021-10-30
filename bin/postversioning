@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -eu
+
+NODE_ENV=production yarn transpile
+yarn prettier . --write

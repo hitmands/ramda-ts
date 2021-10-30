@@ -69,6 +69,15 @@ const withDryRun = (callback) => {
    * @type {string}
    */
   const raw = argv._[0];
+  if (!raw) {
+    console.error(`
+Missing required argument \`functionName\`.
+
+e.g.: yarn scaffold whereEq
+    `);
+    process.exit(1);
+  }
+
   const name = ucFirst(raw) || camel(raw, { locale: ["en-US"] });
   const path = ucFirst(raw) ? raw.toLowerCase() : kebab(name);
   const dir = `src/${path}`;
