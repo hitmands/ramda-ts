@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "outDir": "./dist/esnext",
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "esnext",
+    "typeRoots": ["node_modules/@types/"]
+  }
+}
