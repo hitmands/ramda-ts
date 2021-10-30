@@ -9,6 +9,7 @@ on:
 jobs:
   versioning:
     name: 'SemVer'
+    if: '${{ github.event.pull_request.merged == true }}'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -26,7 +27,22 @@ jobs:
         run: yarn install --frozen-lockfile --silent --prefer-offline
 
       - name: Executing Semantic Versioning
+        id: semver
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          yarn standard-version --dry-run
+          git remote add github "https://${GITHUB_ACTOR}:${{ secrets.HITMANDS_GITHUB_PAT }}@github.com/${GITHUB_REPOSITORY}.git"
+          git config user.email "\<\>"
+          git config user.name "${GITHUB_ACTOR}"
+
+          yarn standard-version
+          echo "::set-output name=version::$(cat package.json | jq -r '.version')"
+          echo "::set-output name=name::$(cat package.json | jq -r '.name')"
+
+          git push github trunk --follow-tags
+
+      - name: Publishing v${{ steps.semver.outputs.version }} to the NPM registry
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm publish
