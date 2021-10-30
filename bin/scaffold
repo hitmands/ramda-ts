@@ -1,0 +1,88 @@
+#!/usr/bin/env node
+
+const kebab = require("kebab-case");
+const camel = require("camelcase");
+const fs = require("fs-extra");
+const { argv } = require("yargs");
+
+const ramdaFunction = (name) => `/**
+ * A function that ...
+ *
+ * @func
+ * @memberOf R
+ * @category Function
+ * @sig * -> null
+ * @see R.
+ * @example \`\`\`
+ *   R.${name}(); //=> null
+ * \`\`\`
+ */
+export function ${name}() {
+  return null;
+}
+`;
+
+const test = (name, location) => `import { ${name} } from './${location}';
+
+describe('R.${name}', () => {
+  it('should just return null', () => {
+    const given = ${name}();
+    
+    expect(given).toBeNull();
+  });
+});
+`;
+
+const index = (name, location) => `export { ${name} } from './${location}';
+`;
+
+// ==
+
+// handle single ucfirst letters as `R.T`
+const ucFirst = (input) => input.length === 1 && input === input.toUpperCase() ? input : null;
+
+const assert = (dir) => {
+  if (!fs.pathExistsSync(dir)) {
+    return;
+  }
+
+  if (argv.force || argv.f) {
+    console.warn(`--force detected`);
+  } else {
+    console.error(`\nRamda Function "${dir}" already exists\n`);
+    process.exit(1);
+  }
+};
+
+const withDryRun = (callback) => {
+  if (argv.dryRun) {
+    console.log(`--dry-run detected`);
+
+    return () => {};
+  }
+
+  return callback();
+}
+
+(async function main() {
+  /**
+   * @type {string}
+   */
+  const raw = argv._[0];
+  const name = ucFirst(raw) || camel(raw, { locale: ["en-US"] });
+  const path = ucFirst(raw) ? raw.toLowerCase() : kebab(name);
+  const dir = `src/${path}`;
+
+  assert(dir);
+  await withDryRun(async () => {
+    await fs.ensureDir(dir);
+
+    await fs.outputFile(`${dir}/${path}.ts`, ramdaFunction(name));
+    await fs.outputFile(`${dir}/${path}.test.ts`, test(name, path));
+    await fs.outputFile(`${dir}/index.ts`, index(name, path));
+  });
+
+  console.log(`yarn scaffold "${raw}" => Created R.${name}() in './src/${path}/${path}.ts'`, {
+    raw, name, path, dir
+  });
+})();
