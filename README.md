@@ -32,3 +32,14 @@ git clone https://github.com/hitmands/ramda-ts.git && cd ramda-ts
 # To create a new method
 yarn scaffold methodName # --dry-run # --force
 ```
+
+```shell
+# To comply with the Code Style
+yarn prettier . --write && yarn eslint . --fix
+```
+
+```shell
+yarn test # --watch
+
+yarn transpile:esnext # -w
+```

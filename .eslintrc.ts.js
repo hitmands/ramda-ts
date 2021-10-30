@@ -7,9 +7,7 @@ module.exports = {
       parserOptions: {
         project: './tsconfig.json',
       },
-      extends: [
-        'airbnb-typescript/base',
-      ],
+      extends: ['airbnb-typescript/base'],
       rules: {
         '@typescript-eslint/explicit-module-boundary-types': 0,
         'no-shadow': 0,
