@@ -9,6 +9,7 @@ on:
 jobs:
   versioning:
     name: 'SemVer'
+    if: '${{ github.event.pull_request.merged == true }}'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -29,4 +30,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          yarn standard-version --dry-run
+          yarn standard-version
+          git push --follow-tags
+
+      - name: Publishing to the NPM registry
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm publish
