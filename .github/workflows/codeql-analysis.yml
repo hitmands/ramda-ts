@@ -1,6 +1,8 @@
 name: 'CodeQL'
 
-on: [pull_request]
+on:
+  schedule:
+    - '* * 7 * *' # Every 7 days
 
 jobs:
   analyze:
@@ -11,9 +13,6 @@ jobs:
       contents: read
       security-events: write
 
-    strategy:
-      fail-fast: false
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -21,7 +20,7 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
         with:
-          languages: 'typescript'
+          languages: typescript, shell
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
