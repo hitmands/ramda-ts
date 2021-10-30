@@ -1,4 +1,6 @@
 {
+  "name": "@hitmands/ramda-ts",
+  "version": "0.0.1",
   "scripts": {
     "scaffold": "./bin/scaffold",
     "test": "jest",
@@ -21,6 +23,7 @@
     "kebab-case": "^1.0.1",
     "prettier": "^2.4.1",
     "rollup": "^2.58.3",
+    "standard-version": "^9.3.2",
     "ts-jest": "^27.0.7",
     "tslib": "^2.3.1",
     "typescript": "^4.4.4",
