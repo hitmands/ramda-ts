@@ -1,0 +1,32 @@
+name: 'Versioning'
+
+on:
+  pull_request:
+    branches:
+      - trunk
+    types: [closed]
+
+jobs:
+  versioning:
+    name: 'SemVer'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/cache@v2
+        id: yarn
+        with:
+          path: '**/node_modules'
+          key: ${{ env.CACHE_KEY }}
+
+      - name: Installing Dependencies
+        run: yarn install --frozen-lockfile --silent --prefer-offline
+
+      - name: Executing Semantic Versioning
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npx standard-version --dry-run
