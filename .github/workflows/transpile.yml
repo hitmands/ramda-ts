@@ -2,15 +2,12 @@ name: 'Transpile'
 
 on: [pull_request]
 
-env:
-  CACHE_KEY: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
-
 jobs:
   transpile:
-    name: 'Transpile => ${{ matrix.version }}'
+    name: 'Typescript => ${{ matrix.esversion }}'
     strategy:
       matrix:
-        version: [esnext, cjs]
+        esversion: [esnext, cjs]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -23,12 +20,12 @@ jobs:
         id: yarn
         with:
           path: '**/node_modules'
-          key: ${{ env.CACHE_KEY }}
+          key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
 
       - name: Installing Dependencies
         run: yarn install --frozen-lockfile --silent --prefer-offline
 
       - name: Transpile
         run: |
-          NODE_ENV=production yarn transpile:${{ matrix.version }}
-          NODE_ENV=development yarn transpile:${{ matrix.version }}
+          NODE_ENV=production yarn transpile:${{ matrix.esversion }}
+          NODE_ENV=development yarn transpile:${{ matrix.esversion }}

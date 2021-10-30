@@ -1,8 +1,5 @@
 name: 'Unit Testing'
 
-env:
-  CACHE_KEY: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
-
 on:
   pull_request:
   push:
@@ -24,7 +21,7 @@ jobs:
         id: yarn
         with:
           path: '**/node_modules'
-          key: ${{ env.CACHE_KEY }}
+          key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
 
       - name: Installing Dependencies
         run: yarn install --frozen-lockfile --silent --prefer-offline

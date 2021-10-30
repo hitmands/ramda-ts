@@ -1,0 +1,27 @@
+version: '2'
+
+plugins:
+  nodesecurity:
+    enabled: true
+
+  editorconfig:
+    enabled: true
+
+  markdownlint:
+    enabled: true
+
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - javascript
+
+  eslint:
+    enabled: false
+
+  fixme:
+    enabled: true
+
+exclude_patterns:
+  - '.*'
+  - 'CHANGELOG.md'

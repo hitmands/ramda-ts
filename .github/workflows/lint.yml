@@ -2,9 +2,6 @@ name: 'Lint'
 
 on: [pull_request]
 
-env:
-  CACHE_KEY: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
-
 jobs:
   prettier:
     name: 'Prettier'
@@ -20,7 +17,7 @@ jobs:
         id: yarn
         with:
           path: '**/node_modules'
-          key: ${{ env.CACHE_KEY }}
+          key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
 
       - name: Installing Dependencies
         run: yarn install --frozen-lockfile --silent --prefer-offline
@@ -42,7 +39,7 @@ jobs:
         id: yarn
         with:
           path: '**/node_modules'
-          key: ${{ env.CACHE_KEY }}
+          key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
 
       - name: Installing Dependencies
         run: yarn install --frozen-lockfile --silent --prefer-offline
