@@ -1,8 +1,10 @@
 {
   "scripts": {
-    "transpile": "tsc",
-    "transpile:cjs": "rollup -c rollup.config.js",
-    "scaffold": "./bin/scaffold"
+    "scaffold": "./bin/scaffold",
+    "test": "jest",
+    "transpile": "yarn transpile:cjs & yarn transpile:esnext",
+    "transpile:cjs": "rollup --config rollup.config.js",
+    "transpile:esnext": "tsc"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.3.0",
