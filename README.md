@@ -22,6 +22,12 @@ incrementally by who care the most, Ramda users.
 - Typesafe Developer Experience
 - Reconcile different solutions like <https://github.com/typed-typings/npm-ramda/issues/163>
 
+## Installing the NPM package
+
+```shell
+yarn add @hitmands/ramda-ts
+```
+
 ## Getting Started
 
 ```shell
