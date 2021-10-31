@@ -1,5 +1,5 @@
 module.exports = {
   scripts: {
-    precommit: './bin/postversioning',
+    postchangelog: './bin/postversioning',
   },
 };
