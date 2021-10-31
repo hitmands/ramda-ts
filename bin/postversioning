@@ -2,5 +2,13 @@
 
 set -eu
 
+VERSION=$(cat 'package.json' | jq -r '.version')
+
+echo "
+
+Starting pre-release pipeline for v${VERSION}
+"
+
 NODE_ENV=production yarn transpile
-yarn prettier . --write
+
+yarn prettier . --write > /dev/null
