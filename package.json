@@ -8,6 +8,10 @@
     "transpile:cjs": "rollup --config rollup.config.js",
     "transpile:esnext": "tsc --project tsconfig.build.json"
   },
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.3.0",
     "@types/jest": "^27.0.2",
