@@ -4,6 +4,7 @@
   "module": "./dist/esnext/index.js",
   "main": "./dist/cjs/index.js",
   "types": "./dist/cjs/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "scaffold": "./bin/scaffold",
     "test": "jest",
