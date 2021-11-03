@@ -1,4 +1,4 @@
-interface FunctionalPlaceholder {
+export interface FunctionalPlaceholder {
   readonly '@@functional/placeholder': true;
 }
 
