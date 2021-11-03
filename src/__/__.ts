@@ -1,3 +1,7 @@
+interface FunctionalPlaceholder {
+  readonly '@@functional/placeholder': true;
+}
+
 /**
  * A special placeholder value used to specify "gaps" within curried functions,
  * allowing partial application of any combination of arguments, regardless of
@@ -25,4 +29,4 @@
  *      greet('Alice'); //=> 'Hello, Alice!'
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle
-export const __ = { '@@functional/placeholder': true };
+export const __: FunctionalPlaceholder = { '@@functional/placeholder': true };
